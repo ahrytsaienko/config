@@ -13,12 +13,12 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "monospace" :size 12))
+(setq doom-font (font-spec :family "monaco" :size 12))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'doom-one-light)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -26,7 +26,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type 'nil)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -51,6 +51,11 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (setq-default evil-escape-key-sequence "jk")
 
+(after! cider
+  (add-hook 'cider-mode-hook 'subword-mode)
+  (setq clojure-align-forms-automatically t
+        cider-repl-result-prefix "")
+  (set-popup-rule! "^\\*cider-repl" :side 'right :size 0.33 :quit nil))
 
 (setq company-idle-delay 0.2
       company-minimum-prefix-length 3)
