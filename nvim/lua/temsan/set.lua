@@ -28,7 +28,18 @@ vim.opt.colorcolumn = "120"
 
 vim.opt.clipboard = "unnamedplus"
 
+-- new
+
+-- vim.opt.endofline = true
+-- vim.opt.endoffile = false
+-- vim.opt.fixendofline = true
+
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+-- vim.opt.autoindent = false
+
 vim.opt.incsearch = true
+
+vim.opt.termguicolors = true
+vim.opt.encoding = "utf-8"
