@@ -58,14 +58,14 @@ return require('packer').startup(function(use)
 	  }
   }
 
-  --[[
   use {
 	"windwp/nvim-autopairs",
     config = function() require("nvim-autopairs").setup {} end
   }
-  ]]--
 
   use("christoomey/vim-tmux-navigator")
+
+  use("tpope/vim-surround")
 
 
 end)
