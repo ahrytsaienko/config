@@ -11,11 +11,16 @@ return require('packer').startup(function(use)
   use 'vimpostor/vim-tpipeline'
 
   use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.4',
+	  'nvim-telescope/telescope.nvim', tag = '0.1.6',
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
 
-  use ({ 'projekt0n/github-nvim-theme' })
+  use ({
+    'projekt0n/github-nvim-theme',
+    config = function()
+      vim.cmd('colorscheme github_light')
+    end
+  })
 
   use({
       "folke/trouble.nvim",
@@ -32,6 +37,7 @@ return require('packer').startup(function(use)
 				local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
 				ts_update()
 			end,}
+
   use("tpope/vim-fugitive")
   use("nvim-treesitter/nvim-treesitter-context");
 
