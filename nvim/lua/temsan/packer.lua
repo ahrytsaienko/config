@@ -11,14 +11,14 @@ return require('packer').startup(function(use)
   use 'vimpostor/vim-tpipeline'
 
   use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.6',
+	  'nvim-telescope/telescope.nvim', tag = '0.1.8',
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
 
   use ({
     'projekt0n/github-nvim-theme',
     config = function()
-      vim.cmd('colorscheme github_light')
+      vim.cmd('colorscheme github_light_default')
     end
   })
 
@@ -67,6 +67,13 @@ return require('packer').startup(function(use)
   use {
 	"windwp/nvim-autopairs",
     config = function() require("nvim-autopairs").setup {} end
+  }
+
+  use {
+  'nvim-tree/nvim-tree.lua',
+  requires = {
+    'nvim-tree/nvim-web-devicons', -- optional
+    },
   }
 
   use("christoomey/vim-tmux-navigator")
