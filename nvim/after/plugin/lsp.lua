@@ -14,8 +14,8 @@ cmp.setup({
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<CR>"]      = cmp.mapping.confirm({ select = true }),
 
-    ["<C-n>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-    ["<C-p>"]     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+    ["<C-j>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+    ["<C-k>"]     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
 
     -- If you want tab to jump through snippet placeholders, uncomment this block:
     ["<Tab>"]     = function(fallback)
