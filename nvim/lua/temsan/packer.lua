@@ -1,85 +1,147 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+-- ============================================================================
+-- 📦 Plugin Management with packer.nvim
+-- ============================================================================
+-- This file is loaded from your init.lua via:
+--   lua require('plugins')
+--
+-- To (re)install all plugins:
+--   :source % | PackerSync
+-- ============================================================================
 
--- Only required if you have packer configured as `opt`
 vim.cmd.packadd('packer.nvim')
 
 return require('packer').startup(function(use)
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
 
-  -- merge tmux line
-  use 'vimpostor/vim-tpipeline'
+  -- --------------------------------------------------------------------------
+  -- 🧰 Core
+  -- --------------------------------------------------------------------------
+  use 'wbthomason/packer.nvim'              -- Let packer manage itself
 
-  use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.8',
-	  requires = { {'nvim-lua/plenary.nvim'} }
-  }
-
-  use ({
-    'projekt0n/github-nvim-theme',
+  -- --------------------------------------------------------------------------
+  -- 💅 UI / Appearance
+  -- --------------------------------------------------------------------------
+  use({
+    'projekt0n/github-nvim-theme',          -- GitHub-style light/dark theme
     config = function()
       vim.cmd('colorscheme github_light_default')
     end
   })
 
   use({
-      "folke/trouble.nvim",
-      config = function()
-          require("trouble").setup {
-              icons = false,
-          }
-      end
+    'nvim-lualine/lualine.nvim',            -- Modern statusline
+    requires = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('lualine').setup({
+        options = {
+          theme = 'auto',
+          globalstatus = true,              -- One statusline for entire screen
+        },
+      })
+    end,
   })
 
-  use {
-			'nvim-treesitter/nvim-treesitter',
-			run = function()
-				local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-				ts_update()
-			end,}
+  use({
+    "folke/trouble.nvim",                   -- Pretty diagnostics / quickfix list
+    config = function()
+      require("trouble").setup({
+        icons = true,
+        use_diagnostic_signs = true,
+      })
+    end
+  })
 
-  use("tpope/vim-fugitive")
-  use("nvim-treesitter/nvim-treesitter-context");
+  use({
+    "lewis6991/gitsigns.nvim",              -- Git diff signs + blame in gutter
+    config = function()
+      require("gitsigns").setup({
+        current_line_blame = true,
+      })
+    end
+  })
 
-  use {
-	  'VonHeikemen/lsp-zero.nvim',
-	  branch = 'v1.x',
-	  requires = {
-		  -- LSP Support
-		  {'neovim/nvim-lspconfig'},
-		  {'williamboman/mason.nvim'},
-		  {'williamboman/mason-lspconfig.nvim'},
+  -- --------------------------------------------------------------------------
+  -- 🪵 Navigation & File Management
+  -- --------------------------------------------------------------------------
+  use({
+    'nvim-tree/nvim-tree.lua',              -- File explorer sidebar
+    requires = { 'nvim-tree/nvim-web-devicons' },
+  })
 
-		  -- Autocompletion
-		  {'hrsh7th/nvim-cmp'},
-		  {'hrsh7th/cmp-buffer'},
-		  {'hrsh7th/cmp-path'},
-		  {'saadparwaiz1/cmp_luasnip'},
-		  {'hrsh7th/cmp-nvim-lsp'},
-		  {'hrsh7th/cmp-nvim-lua'},
+  use({
+    'nvim-telescope/telescope.nvim',        -- Fuzzy finder (files, LSP, etc.)
+    tag = '0.1.8',
+    requires = { { 'nvim-lua/plenary.nvim' } },
+  })
 
-		  -- Snippets
-		  {'L3MON4D3/LuaSnip'},
-		  {'rafamadriz/friendly-snippets'},
-	  }
-  }
+  use("christoomey/vim-tmux-navigator")     -- Seamless tmux <-> nvim navigation
 
-  use {
-	"windwp/nvim-autopairs",
-    config = function() require("nvim-autopairs").setup {} end
-  }
+  -- --------------------------------------------------------------------------
+  -- 🧠 Syntax & Text Editing
+  -- --------------------------------------------------------------------------
+  use({
+    'nvim-treesitter/nvim-treesitter',      -- Better syntax highlighting
+    run = function()
+      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+      ts_update()
+    end,
+  })
+  use("nvim-treesitter/nvim-treesitter-context") -- Sticky context at top of file
 
-  use {
-  'nvim-tree/nvim-tree.lua',
-  requires = {
-    'nvim-tree/nvim-web-devicons', -- optional
-    },
-  }
+  use({
+    "numToStr/Comment.nvim",                -- Toggle comments easily
+    config = function()
+      require("Comment").setup()
+    end
+  })
 
-  use("christoomey/vim-tmux-navigator")
+  use({
+    "kylechui/nvim-surround",               -- Edit surroundings (quotes, brackets)
+    tag = "*",
+    config = function()
+      require("nvim-surround").setup({})
+    end
+  })
 
-  use("tpope/vim-surround")
+  use({
+    "windwp/nvim-autopairs",                -- Auto-close brackets, quotes, etc.
+    config = function()
+      require("nvim-autopairs").setup({})
+    end
+  })
 
+  use("tpope/vim-fugitive")                 -- Git wrapper inside Neovim
 
+  -- --------------------------------------------------------------------------
+  -- 🧩 LSP / Completion / Snippets
+  -- --------------------------------------------------------------------------
+  -- 🛠 LSP server manager
+  use({
+    "williamboman/mason.nvim",
+    run = ":MasonUpdate",
+    config = function()
+      require("mason").setup()
+    end
+  })
+
+  -- 🔌 Mason bridge to nvim-lspconfig
+  use("williamboman/mason-lspconfig.nvim")
+
+  -- ⚙️ Core LSP configurations
+  use("neovim/nvim-lspconfig")
+
+  -- 🧠 Autocompletion engine
+  use("hrsh7th/nvim-cmp")
+  use("hrsh7th/cmp-nvim-lsp")
+  use("hrsh7th/cmp-path")
+  use("hrsh7th/cmp-buffer")
+
+  -- ✂️ Snippet support
+  use("L3MON4D3/LuaSnip")
+  use("saadparwaiz1/cmp_luasnip")
+  use("rafamadriz/friendly-snippets")
+
+  -- --------------------------------------------------------------------------
+  -- ✅ End of plugin list
+  -- --------------------------------------------------------------------------
 end)
 

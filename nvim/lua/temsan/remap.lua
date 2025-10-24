@@ -1,19 +1,42 @@
+-- ============================================================================
+-- 🎹 Keymaps / Remaps
+-- ============================================================================
+-- All mappings use <Space> as the leader key (see set.lua)
+-- To check mappings: :map or :verbose map <key>
+-- ============================================================================
+
 local builtin = require('telescope.builtin')
 
-vim.g.mapleader = " "
+-- --------------------------------------------------------------------------
+-- 🧱 Basic Editing
+-- --------------------------------------------------------------------------
+vim.keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode quickly" })
 
-vim.keymap.set("i", "jk", "<ESC>")
+-- Visual mode paste without replacing register
+vim.keymap.set("x", "p", [["_dP]], { desc = "Paste over selection without yanking" })
 
-vim.keymap.set("n", "<leader>sv", "<C-w>v")
-vim.keymap.set("n", "<leader>sh", "<C-w>s")
+-- --------------------------------------------------------------------------
+-- 🪟 Window Management
+-- --------------------------------------------------------------------------
+vim.keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
+vim.keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
 
--- Prevent `p` in visual mode from overwriting the default register
-vim.keymap.set("x", "p", [["_dP]])
+-- --------------------------------------------------------------------------
+-- 📁 File Explorer
+-- --------------------------------------------------------------------------
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Open file explorer (:Ex)" })
+vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
-vim.keymap.set("n", "<C-p>", builtin.git_files, {})
+-- --------------------------------------------------------------------------
+-- 🔍 Telescope Search
+-- --------------------------------------------------------------------------
+vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "Find files" })
+vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Find Git-tracked files" })
 vim.keymap.set("n", "<leader>ps", function()
-	builtin.grep_string({ search = vim.fn.input("Grep > ") });
-end)
+  builtin.grep_string({ search = vim.fn.input("Grep > ") })
+end, { desc = "Search string in project (live grep)" })
 
+-- --------------------------------------------------------------------------
+-- 🧠 LSP Actions
+-- --------------------------------------------------------------------------
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format current file with LSP" })
