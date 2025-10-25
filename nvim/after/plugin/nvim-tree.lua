@@ -22,14 +22,14 @@ vim.opt.termguicolors = true
 
 -- Setup configuration
 nvim_tree.setup({
-  sort_by = "case_sensitive",       -- Sort files alphabetically (case sensitive)
+  sort_by = "case_sensitive", -- Sort files alphabetically (case sensitive)
   view = {
-    width = 35,                     -- Sidebar width
-    relativenumber = true,          -- Show relative numbers in tree
+    width = 35,               -- Sidebar width
+    relativenumber = true,    -- Show relative numbers in tree
     preserve_window_proportions = true,
   },
   renderer = {
-    group_empty = true,             -- Compact empty folders
+    group_empty = true, -- Compact empty folders
     highlight_git = true,
     icons = {
       show = {
@@ -41,19 +41,19 @@ nvim_tree.setup({
     },
   },
   filters = {
-    dotfiles = false,               -- Show dotfiles (set true to hide)
+    dotfiles = false, -- Show dotfiles (set true to hide)
   },
   git = {
-    enable = true,                  -- Show git status in the tree
+    enable = true, -- Show git status in the tree
     ignore = false,
   },
   update_focused_file = {
-    enable = true,                  -- Highlight file in tree when switching buffers
+    enable = true, -- Highlight file in tree when switching buffers
     update_cwd = true,
   },
   actions = {
     open_file = {
-      quit_on_open = false,         -- Keep the tree open when opening a file
+      quit_on_open = false, -- Keep the tree open when opening a file
       resize_window = true,
     },
   },

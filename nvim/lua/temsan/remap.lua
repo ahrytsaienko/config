@@ -16,12 +16,6 @@ vim.keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode quickly" })
 vim.keymap.set("x", "p", [["_dP]], { desc = "Paste over selection without yanking" })
 
 -- --------------------------------------------------------------------------
--- 🪟 Window Management
--- --------------------------------------------------------------------------
-vim.keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
-vim.keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
-
--- --------------------------------------------------------------------------
 -- 📁 File Explorer
 -- --------------------------------------------------------------------------
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
