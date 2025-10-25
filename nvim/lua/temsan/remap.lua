@@ -24,7 +24,6 @@ vim.keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally"
 -- --------------------------------------------------------------------------
 -- 📁 File Explorer
 -- --------------------------------------------------------------------------
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Open file explorer (:Ex)" })
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
 
 -- --------------------------------------------------------------------------
