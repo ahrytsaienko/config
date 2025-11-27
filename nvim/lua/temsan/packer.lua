@@ -109,6 +109,7 @@ return require('packer').startup(function(use)
   })
 
   use("tpope/vim-fugitive") -- Git wrapper inside Neovim
+  use("sindrets/diffview.nvim") -- Git diff view
 
   -- --------------------------------------------------------------------------
   -- 🧩 LSP / Completion / Snippets

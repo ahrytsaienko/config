@@ -76,12 +76,12 @@ end, { desc = "Reveal current file in explorer" })
 -- ============================================================================
 -- 🪄 Optional: Auto open tree when launching Neovim with no file
 -- ============================================================================
-
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function(data)
-    -- open nvim-tree only if no file or directory is given
-    if vim.fn.isdirectory(data.file) ~= 0 or data.file == "" then
-      require("nvim-tree.api").tree.open()
-    end
-  end,
-})
+--
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   callback = function(data)
+--     -- open nvim-tree only if no file or directory is given
+--     if vim.fn.isdirectory(data.file) ~= 0 or data.file == "" then
+--       require("nvim-tree.api").tree.open()
+--     end
+--   end,
+-- })

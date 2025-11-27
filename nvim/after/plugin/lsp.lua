@@ -107,6 +107,8 @@ require("mason-lspconfig").setup({
     "rust_analyzer",
     "zls",
     "lua_ls",
+    "terraformls",
+    "tflint",
   },
   automatic_installation = true,
 })
@@ -153,6 +155,12 @@ vim.lsp.config("rust_analyzer", {
 
 -- Zig
 vim.lsp.config("zls", {
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
+-- Terraform
+vim.lsp.config("terraformls", {
   capabilities = capabilities,
   on_attach = on_attach,
 })
