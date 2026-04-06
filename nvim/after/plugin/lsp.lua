@@ -74,10 +74,10 @@ local on_attach = function(client, bufnr)
   -- Signature help in insert mode
   map("i", "<C-h>", vim.lsp.buf.signature_help, "Signature help")
 
-  -- Enable inlay hints automatically if server supports them (Neovim >=0.10+)
-  if client.server_capabilities.inlayHintProvider then
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  end
+  -- -- Enable inlay hints automatically if server supports them (Neovim >=0.10+)
+  -- if client.server_capabilities.inlayHintProvider then
+  --   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  -- end
 end
 
 -- =========
@@ -85,6 +85,7 @@ end
 -- =========
 vim.diagnostic.config({
   virtual_text = true,
+  underline = false,
   float = { border = "rounded" },
   signs = true,
 })

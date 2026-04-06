@@ -68,21 +68,22 @@ return require('packer').startup(function(use)
 
   use({
     'nvim-telescope/telescope.nvim', -- Fuzzy finder (files, LSP, etc.)
-    tag = '0.1.8',
     requires = { { 'nvim-lua/plenary.nvim' } },
   })
 
-  use("christoomey/vim-tmux-navigator") -- Seamless tmux <-> nvim navigation
-
+  use({
+    "christoomey/vim-tmux-navigator",
+    config = function()
+      vim.g.tmux_navigator_no_wrap = 1 -- remove jumping to tmix if no windows in direction
+    end
+  })
   -- --------------------------------------------------------------------------
   -- 🧠 Syntax & Text Editing
   -- --------------------------------------------------------------------------
   use({
     'nvim-treesitter/nvim-treesitter', -- Better syntax highlighting
-    run = function()
-      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-      ts_update()
-    end,
+    branch = 'main',
+    run = ':TSUpdate',
   })
   use("nvim-treesitter/nvim-treesitter-context") -- Sticky context at top of file
 
@@ -108,7 +109,14 @@ return require('packer').startup(function(use)
     end
   })
 
-  use("tpope/vim-fugitive") -- Git wrapper inside Neovim
+  use({
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("ibl").setup()
+    end
+  })
+
+  use("tpope/vim-fugitive")     -- Git wrapper inside Neovim
   use("sindrets/diffview.nvim") -- Git diff view
 
   -- --------------------------------------------------------------------------

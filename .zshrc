@@ -105,9 +105,9 @@ alias v=nvim
 export GOPATH=$HOME/go
 export ZIG=$HOME/zig
 export PATH="$PATH:/opt/homebrew/bin/brew:user/local:user/local/bin:/usr/local/protobuf/bin:$GOPATH/bin:$ZIG"
-export GOPRIVATE=github.com/Headway-Dev/*
-export GONOPROXY=github.com/Headway-Dev/*
-export GONOSUMDB=github.com/Headway-Dev/*
+export GOPRIVATE=gitlab.com/headway-inc/*
+export GONOPROXY=gitlab.com/headway-inc/*
+export GONOSUMDB=gitlab.com/headway-inc/*
 ## workaround to fix pre-commit hook
 export GOFLAGS=-buildvcs=false
 # opam configuration
