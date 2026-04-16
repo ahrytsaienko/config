@@ -1,12 +1,10 @@
-require('nvim-treesitter').setup({
-  ensure_installed = {
-    "vimdoc", "javascript", "typescript", "c",
-    "lua", "rust", "go", "python", "terraform",
-  },
-  auto_install = true,
+require('nvim-treesitter').setup()
+
+require('nvim-treesitter').install({
+  "vimdoc", "javascript", "typescript", "c",
+  "lua", "rust", "go", "python", "terraform", "json",
 })
 
--- Enable treesitter highlighting for all filetypes
 vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     pcall(vim.treesitter.start)
