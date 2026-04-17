@@ -21,6 +21,30 @@ return {
     },
   },
 
+  -- Auto-install non-LSP tools (formatters for conform.nvim, linters for nvim-lint)
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    event = "VeryLazy",
+    opts = {
+      ensure_installed = {
+        -- formatters (conform.nvim)
+        "stylua",
+        "gofumpt",
+        "goimports",
+        "prettier",
+        "shfmt",
+        -- linters (nvim-lint)
+        "golangci-lint",
+        "shellcheck",
+        "tflint",
+        "hadolint",
+      },
+      run_on_start = true,
+      start_delay = 3000, -- wait 3s after startup before checking
+    },
+  },
+
   {
     "neovim/nvim-lspconfig",
     dependencies = {
