@@ -5,7 +5,6 @@
 -- To check mappings: :map or :verbose map <key>
 -- ============================================================================
 
-local builtin = require('telescope.builtin')
 local keymap = vim.keymap.set
 
 -- --------------------------------------------------------------------------
@@ -33,19 +32,9 @@ keymap("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
 -- --------------------------------------------------------------------------
 keymap("n", "<leader>pv", vim.cmd.Ex, { desc = "Open file explorer (:Ex)" })
 
--- --------------------------------------------------------------------------
--- 🔍 Telescope Search
--- --------------------------------------------------------------------------
-keymap("n", "<leader>pf", builtin.find_files, { desc = "Find files" })
-keymap("n", "<C-p>", builtin.git_files, { desc = "Find Git-tracked files" })
-keymap("n", "<leader>ps", function()
-  builtin.grep_string({ search = vim.fn.input("Grep > ") })
-end, { desc = "Search string in project (live grep)" })
+-- Telescope pickers live in after/plugin/telescope.lua (single source of truth).
 
--- --------------------------------------------------------------------------
--- 🧠 LSP Actions
--- --------------------------------------------------------------------------
-keymap("n", "<leader>f", vim.lsp.buf.format, { desc = "Format current file with LSP" })
+-- <leader>f is owned by conform.nvim — see lua/temsan/plugins/format.lua
 
 -- --------------------------------------------------------------------------
 -- 🛠️ Utility Commands

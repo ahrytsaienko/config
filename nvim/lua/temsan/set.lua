@@ -64,7 +64,6 @@ vim.opt.cmdheight = 1        -- Command line height (increase if you get "Press 
 -- 📋 Clipboard & Encoding
 -- ----------------------------------------------------------------------------
 vim.opt.clipboard = "unnamedplus" -- Use system clipboard for yank/paste operations
-vim.opt.encoding = "utf-8"        -- Default file encoding (should be UTF-8)
 vim.opt.fileencoding = "utf-8"    -- Encoding written to files
 
 -- ----------------------------------------------------------------------------
@@ -76,9 +75,8 @@ vim.opt.splitbelow = true -- Horizontal splits open below
 -- ----------------------------------------------------------------------------
 -- ⚡ Performance & Responsiveness
 -- ----------------------------------------------------------------------------
-vim.opt.updatetime = 250   -- Faster CursorHold events (used by gitsigns, LSP) - default is 4000ms
-vim.opt.timeoutlen = 300   -- Timeout for mapped key sequences (affects which-key popup delay)
-vim.opt.lazyredraw = false -- Don't skip screen redraws (keep false for modern Neovim)
+vim.opt.updatetime = 250 -- Faster CursorHold events (used by gitsigns, LSP) - default is 4000ms
+vim.opt.timeoutlen = 300 -- Timeout for mapped key sequences (affects which-key popup delay)
 
 -- ----------------------------------------------------------------------------
 -- 🖱️ Mouse Support
@@ -96,9 +94,12 @@ vim.opt.pumheight = 10                                  -- Limit popup menu heig
 -- ----------------------------------------------------------------------------
 vim.opt.list = false -- Hide invisible characters
 -- Auto-cleanup trailing whitespace
+-- Skipped for filetypes where trailing spaces are semantic or distracting in diffs.
+local trim_skip = { markdown = true, diff = true, patch = true, gitcommit = true, mail = true }
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
-  callback = function()
+  callback = function(args)
+    if trim_skip[vim.bo[args.buf].filetype] then return end
     local save_cursor = vim.fn.getpos(".")
     vim.cmd([[%s/\s\+$//e]])
     vim.fn.setpos(".", save_cursor)
