@@ -6,8 +6,9 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("nvim-treesitter").install({
-        "vimdoc", "javascript", "typescript", "c",
+        "vimdoc", "javascript", "typescript", "tsx", "css", "c",
         "lua", "rust", "go", "python", "terraform", "json",
+        "markdown", "markdown_inline",
       })
 
       -- Start treesitter only for filetypes with an installed parser.

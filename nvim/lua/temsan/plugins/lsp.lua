@@ -17,7 +17,12 @@ return {
         "zls",
         "lua_ls",
         "terraformls",
+        "basedpyright",
+        "ruff",
+        "vtsls",
+        "eslint",
       },
+      automatic_enable = false,
     },
   },
 
@@ -82,6 +87,10 @@ return {
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
       end
 
+      vim.lsp.config("*", {
+        flags = { allow_incremental_sync = false },
+      })
+
       vim.lsp.config("lua_ls", {
         capabilities = capabilities,
         on_attach = on_attach,
@@ -109,7 +118,70 @@ return {
       vim.lsp.config("zls", { capabilities = capabilities, on_attach = on_attach })
       vim.lsp.config("terraformls", { capabilities = capabilities, on_attach = on_attach })
 
-      vim.lsp.enable({ "lua_ls", "gopls", "rust_analyzer", "zls", "terraformls" })
+      vim.lsp.config("basedpyright", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "basic",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "openFilesOnly",
+            },
+          },
+        },
+      })
+
+      vim.lsp.config("ruff", {
+        capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          -- Let basedpyright own hover/navigation; ruff handles lint + format only.
+          client.server_capabilities.hoverProvider = false
+          client.server_capabilities.definitionProvider = false
+          client.server_capabilities.declarationProvider = false
+          client.server_capabilities.typeDefinitionProvider = false
+          client.server_capabilities.implementationProvider = false
+          client.server_capabilities.referencesProvider = false
+          client.server_capabilities.documentSymbolProvider = false
+          on_attach(client, bufnr)
+        end,
+      })
+
+      vim.lsp.config("vtsls", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          typescript = {
+            inlayHints = {
+              parameterNames = { enabled = "literals" },
+              variableTypes = { enabled = true },
+              propertyDeclarationTypes = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+            },
+          },
+          javascript = {
+            inlayHints = {
+              parameterNames = { enabled = "literals" },
+              variableTypes = { enabled = true },
+            },
+          },
+        },
+      })
+
+      vim.lsp.config("eslint", {
+        capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          on_attach(client, bufnr)
+          -- fix-on-save: eslint LSP registers LspEslintFixAll on attach
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            command = "LspEslintFixAll",
+          })
+        end,
+      })
+
+      vim.lsp.enable({ "lua_ls", "gopls", "rust_analyzer", "zls", "terraformls", "basedpyright", "ruff", "vtsls", "eslint" })
     end,
   },
 }
