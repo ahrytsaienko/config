@@ -25,6 +25,7 @@ return {
         javascript = { "prettier" },
         typescript = { "prettier" },
         sh         = { "shfmt" },
+        python     = { "ruff_organize_imports", "ruff_format" },
       },
       default_format_opts = { lsp_format = "fallback" },
       format_on_save = nil, -- keep manual; wire to autocmd if/when desired
