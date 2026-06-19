@@ -30,4 +30,46 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     opts = {},
   },
+
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = { "BufReadPost", "BufNewFile" },
+    config = function()
+      require("nvim-treesitter-textobjects").setup({
+        select = { lookahead = true },
+      })
+
+      local select = require("nvim-treesitter-textobjects.select").select_textobject
+      local objects = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+      }
+      for lhs, query in pairs(objects) do
+        vim.keymap.set({ "x", "o" }, lhs, function()
+          select(query, "textobjects")
+        end, { desc = "Textobject " .. query })
+      end
+
+      local move = require("nvim-treesitter-textobjects.move")
+      -- ]m/[m = function, ]]/[[ = class. Avoids gitsigns' ]c/[c hunk nav.
+      local moves = {
+        { keys = { "]m", "[m" }, query = "@function.outer", label = "function" },
+        { keys = { "]]", "[[" }, query = "@class.outer", label = "class" },
+      }
+      for _, m in ipairs(moves) do
+        vim.keymap.set({ "n", "x", "o" }, m.keys[1], function()
+          move.goto_next_start(m.query, "textobjects")
+        end, { desc = "Next " .. m.label })
+        vim.keymap.set({ "n", "x", "o" }, m.keys[2], function()
+          move.goto_previous_start(m.query, "textobjects")
+        end, { desc = "Prev " .. m.label })
+      end
+    end,
+  },
 }

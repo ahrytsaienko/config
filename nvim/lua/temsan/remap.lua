@@ -27,13 +27,8 @@ keymap("n", "<C-u>", "<C-u>zz", { desc = "Scroll up (centered)" })
 keymap("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 keymap("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
 
--- --------------------------------------------------------------------------
--- 📁 File Explorer
--- --------------------------------------------------------------------------
-keymap("n", "<leader>pv", vim.cmd.Ex, { desc = "Open file explorer (:Ex)" })
-
--- Telescope pickers live in after/plugin/telescope.lua (single source of truth).
-
+-- File explorer: <leader>e (nvim-tree) and `-` (oil) — netrw is disabled.
+-- Telescope pickers live in lua/temsan/plugins/telescope.lua.
 -- <leader>f is owned by conform.nvim — see lua/temsan/plugins/format.lua
 
 -- --------------------------------------------------------------------------

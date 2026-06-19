@@ -9,3 +9,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     vim.fn.setpos(".", save_cursor)
   end,
 })
+
+-- Briefly highlight yanked text.
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function() vim.hl.on_yank() end,
+})

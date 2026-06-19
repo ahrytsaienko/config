@@ -4,14 +4,14 @@ return {
     cmd = "Telescope",
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
-      { "gr",         function() require("telescope.builtin").lsp_references() end },
-      { "<leader>pf", function() require("telescope.builtin").find_files() end },
-      { "<C-p>",      function() require("telescope.builtin").git_files() end },
+      { "gr",         function() require("telescope.builtin").lsp_references() end,  desc = "LSP references" },
+      { "<leader>pf", function() require("telescope.builtin").find_files() end,      desc = "Find files" },
+      { "<C-p>",      function() require("telescope.builtin").git_files() end,       desc = "Find git files" },
       { "<leader>ps", function()
         require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
-      end },
-      { "<leader>vh", function() require("telescope.builtin").help_tags() end },
-      { "<leader>pg", function() require("telescope.builtin").live_grep() end },
+      end, desc = "Grep for string (prompt)" },
+      { "<leader>vh", function() require("telescope.builtin").help_tags() end,       desc = "Help tags" },
+      { "<leader>pg", function() require("telescope.builtin").live_grep() end,       desc = "Live grep" },
       { "<leader>pr", function()
         require("telescope.builtin").lsp_references({
           show_line = false,

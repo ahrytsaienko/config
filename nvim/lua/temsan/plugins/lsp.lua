@@ -60,18 +60,26 @@ return {
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      local on_attach = function(_, bufnr)
+      local on_attach = function(client, bufnr)
         local map = function(mode, keys, func, desc)
           vim.keymap.set(mode, keys, func, { buffer = bufnr, silent = true, desc = desc })
         end
         map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+        map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+        map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+        map("n", "gy", vim.lsp.buf.type_definition, "Go to type definition")
+        map("n", "<leader>ds", vim.lsp.buf.document_symbol, "Document symbols")
         map("n", "K", vim.lsp.buf.hover, "Hover docs")
         map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
         map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
         map("n", "<leader>vd", vim.diagnostic.open_float, "Line diagnostics")
-        map("n", "[d", vim.diagnostic.goto_prev, "Prev diagnostic")
-        map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
+        map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, "Prev diagnostic")
+        map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, "Next diagnostic")
         map("i", "<C-h>", vim.lsp.buf.signature_help, "Signature help")
+
+        if client:supports_method("textDocument/inlayHint") then
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+        end
       end
 
       vim.diagnostic.config({
